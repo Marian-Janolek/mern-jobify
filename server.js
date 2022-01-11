@@ -15,8 +15,8 @@ import jobRouter from './routes/jobsRoutes.js';
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.status(200).send('api is running');
+app.get('/api/v1', (req, res) => {
+  res.status(200).json('api is running');
 });
 
 app.use('/api/v1/auth', authRouter);
