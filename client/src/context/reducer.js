@@ -6,6 +6,9 @@ import {
   SETUP_USER_BEGIN,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from './action';
 import { initialState } from './appContext';
 
@@ -62,6 +65,31 @@ const reducer = (state, action) => {
       jobLocation: '',
       userLocation: '',
       token: null,
+    };
+  }
+  if (action.type === UPDATE_USER_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      token: action.payload.token,
+      user: action.payload.user,
+      jobLocation: action.payload.jobLocation,
+      userLocation: action.payload.jobLocation,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'User Profile Updated!',
+    };
+  }
+  if (action.type === UPDATE_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     };
   }
 
