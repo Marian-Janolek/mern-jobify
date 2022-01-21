@@ -3,6 +3,7 @@ import { useAppContext } from '../context/appContext';
 import Job from './Job';
 import Loading from './Loading';
 import Wrapper from '../assets/wrappers/JobsContainer';
+import PageBtnContainer from './PageBtnContainer';
 
 const JobsContainer = () => {
   const {
@@ -15,11 +16,13 @@ const JobsContainer = () => {
     searchType,
     searchStatus,
     sort,
+    numOfPages,
   } = useAppContext();
 
   useEffect(() => {
     getJobs();
-  }, [search, searchType, searchStatus, sort]);
+    // eslint-disable-next-line
+  }, [page, search, searchType, searchStatus, sort]);
 
   if (isLoading) {
     return <Loading center />;
@@ -42,6 +45,7 @@ const JobsContainer = () => {
           <Job key={job._id} {...job} />
         ))}
       </div>
+      {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>
   );
 };

@@ -23,9 +23,9 @@ import {
   EDIT_JOB_ERROR,
   EDIT_JOB_BEGIN,
   SHOW_STATS_BEGIN,
-  SHOW_STATS_ERROR,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from './action';
 import reducer from './reducer';
 import axios from 'axios';
@@ -207,8 +207,8 @@ const AppProvider = ({ children }) => {
   };
 
   const getJobs = async () => {
-    const { search, searchStatus, searchType, sort } = state;
-    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+    const { page, search, searchStatus, searchType, sort } = state;
+    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
 
     if (search) {
       url = url + `&search=${search}`;
@@ -223,8 +223,7 @@ const AppProvider = ({ children }) => {
         payload: { jobs, totalJobs, numOfPages },
       });
     } catch (error) {
-      console.log(error.reponse);
-      // logoutUser()
+      logoutUser();
     }
     clearAlert();
   };
@@ -262,8 +261,7 @@ const AppProvider = ({ children }) => {
       await authFetch.delete(`/jobs/${jobId}`);
       getJobs();
     } catch (error) {
-      console.log(error.response);
-      // logoutUser()
+      logoutUser();
     }
   };
 
@@ -279,14 +277,17 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error.reponse);
-      // logoutUser()
+      logoutUser();
     }
     clearAlert();
   };
 
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTERS });
+  };
+
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
 
   return (
@@ -307,6 +308,7 @@ const AppProvider = ({ children }) => {
         editJob,
         showStats,
         clearFilters,
+        changePage,
       }}
     >
       {children}
