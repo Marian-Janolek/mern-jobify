@@ -1,4 +1,5 @@
 ## Responsive MERN Jobify 
+### [Live Site](https://m-jobify.herokuapp.com/landing)
 
 - MERN project with MongoDB, ExpressJS, React and NodeJS which I built from the scratch. 
 - Project  focusing on adding, editing, deleting, filtering, sorting and searching job opportunities.
