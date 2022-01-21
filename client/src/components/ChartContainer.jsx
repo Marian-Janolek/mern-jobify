@@ -1,39 +1,20 @@
+import React, { useState } from 'react';
+import BarChart from './BarChart';
+import AreaChart from './AreaChart';
 import { useAppContext } from '../context/appContext';
-import StatItem from './StatItem';
-import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from 'react-icons/fa';
 import Wrapper from '../assets/wrappers/ChartsContainer';
 
 const ChartContainer = () => {
-  const { stats } = useAppContext();
-  const defaultStats = [
-    {
-      title: 'pending applications',
-      count: stats.pending || 0,
-      icon: <FaSuitcaseRolling />,
-      color: '#e9b949',
-      bcg: '#fcefc7',
-    },
-    {
-      title: 'interviews scheduled',
-      count: stats.interview || 0,
-      icon: <FaCalendarCheck />,
-      color: '#647acb',
-      bcg: '#e0e8f9',
-    },
-    {
-      title: 'jobs declined',
-      count: stats.declined || 0,
-      icon: <FaBug />,
-      color: '#d66a6a',
-      bcg: '#ffeeee',
-    },
-  ];
+  const [barChart, setBarChart] = useState(true);
+  const { monthlyApplications: data } = useAppContext();
 
   return (
     <Wrapper>
-      {defaultStats.map((item, index) => (
-        <StatItem key={index} {...item} />
-      ))}
+      <h4>Monthly Applications</h4>
+      <button type="button" onClick={() => setBarChart(!barChart)}>
+        {barChart ? 'Area Chart' : 'Bar Chart'}
+      </button>
+      {barChart ? <BarChart data={data} /> : <AreaChart data={data} />}
     </Wrapper>
   );
 };

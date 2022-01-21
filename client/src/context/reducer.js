@@ -22,7 +22,6 @@ import {
   EDIT_JOB_ERROR,
   EDIT_JOB_BEGIN,
   SHOW_STATS_BEGIN,
-  SHOW_STATS_ERROR,
   SHOW_STATS_SUCCESS,
 } from './action';
 import { initialState } from './appContext';
@@ -212,11 +211,8 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       stats: action.payload.stats,
-      monthlyApplication: action.payload.monthlyApplication,
+      monthlyApplications: action.payload.monthlyApplications,
     };
-  }
-  if (action.type === SHOW_STATS_ERROR) {
-    return { ...state };
   }
 
   throw new Error(`No such action : ${action.type}`);
